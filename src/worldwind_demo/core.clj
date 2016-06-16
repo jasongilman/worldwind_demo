@@ -52,7 +52,7 @@
 
 
 (comment
- (earthquakes))
+ (def quake2 (first (earthquakes))))
 
 (defn goto-pos [world lat long elev]
   (let [position (Position. (LatLon/fromDegrees lat long) (* elev 10000))
@@ -64,7 +64,9 @@
          "icon.png" (Position.
                      (LatLon/fromDegrees (Double. (:latitude quake))
                                          (Double. (:longitude quake))) 0.0))
-        (.setToolTipText (apply str (interleave quake (repeat " "))))))
+
+        (.setToolTipText (format "Time: %s\nMagnitude: %s\nDepth: %s"
+                                 (:time quake) (:ml quake) (:depth quake)))))
 
 (defn icon-layer [icons]
   (let [layer (IconLayer.)]
